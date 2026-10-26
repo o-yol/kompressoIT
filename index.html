@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>CompressIT</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+	<main class="card">
+
+		<h1>CompressIT</h1>
+		<p class="subtitle">Huffman-coding text compressor. Lossless for <b>.txt</b> files, runs fully in your browser.</p>
+
+		<section>
+			<h2><span class="num">1</span> Choose a .txt file</h2>
+			<label class="drop" for="file-input" id="drop-zone">
+				<span id="file-label">Click to choose a file</span>
+				<input type="file" id="file-input" accept=".txt,text/plain" hidden>
+			</label>
+			<p id="notice" class="notice" hidden></p>
+		</section>
+
+		<section>
+			<h2><span class="num">2</span> Pick an action</h2>
+			<div class="buttons">
+				<button type="button" id="compress-btn" disabled>Compress</button>
+				<button type="button" id="decompress-btn" class="secondary" disabled>Decompress</button>
+			</div>
+		</section>
+
+		<section id="result" hidden>
+			<h2><span class="num">3</span> Result</h2>
+			<div class="stats">
+				<div><span class="label">Original</span><span class="value" id="stat-original">-</span></div>
+				<div><span class="label">Output</span><span class="value" id="stat-output">-</span></div>
+				<div><span class="label" id="stat-change-label">Saved</span><span class="value" id="stat-change">-</span></div>
+			</div>
+			<p id="result-message" class="message"></p>
+			<div class="buttons">
+				<a id="download-link" class="link-btn" href="#">Download again</a>
+				<button type="button" id="reset-btn" class="secondary">Start over</button>
+			</div>
+		</section>
+
+		<details class="how">
+			<summary>How does it work?</summary>
+			<ol>
+				<li>Count how often each character appears.</li>
+				<li>Put the counts in a <b>min-heap</b>.</li>
+				<li>Repeatedly merge the two rarest into one node. This builds the <b>Huffman tree</b>.</li>
+				<li>Left branch = 0, right branch = 1. Frequent characters get short codes.</li>
+				<li>Replace every character with its code and pack the bits into bytes.</li>
+				<li>Save the tree inside the file so it can be decompressed later.</li>
+			</ol>
+		</details>
+
+	</main>
+
+	<script src="heap.js"></script>
+	<script src="codec.js"></script>
+	<script src="app.js"></script>
+</body>
+</html>
